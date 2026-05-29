@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: raw_banking
+    database: raw_banking_data
+    schema: inbound_files
+    tables:
+      - name: raw_transactions
+      
+  - name: clean_banking
+    database: raw_banking_data
+    schema: clean_data
+    tables:
+      - name: vw_flattened_customer_profiles

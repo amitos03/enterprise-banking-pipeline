@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    columns:
+      - name: transaction_id
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+      - name: transaction_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['CLEARED', 'PENDING', 'FAILED']
+                quote: true
+
+  - name: stg_customers
+    columns:
+      - name: account_id
+        tests:
+          - unique
+          - not_null
