@@ -1,24 +1,17 @@
-with transactions as (
-    select * from {{ ref('stg_transactions') }}
+WITH transactions AS (
+    SELECT * FROM {{ ref('stg_transactions') }}
 ),
 
-customers as (
-    select * from {{ ref('stg_customers') }}
-),
-
-final as (
-    select
-        t.transaction_id,
-        t.account_id,
-        c.full_name as customer_name,
-        c.customer_type,
-        c.city as customer_city,
-        t.amount as transaction_amount,
-        t.txn_date as transaction_date,
-        t.transaction_status
-    from transactions t
-    left join customers c 
-        on t.account_id = c.account_id
+customers AS (
+    SELECT * FROM {{ ref('stg_customers') }}
 )
 
-select * from final
+SELECT
+    t.*,
+    c.customer_id,
+    c.risk_score,
+    c.full_name,
+    c.city
+FROM transactions t
+LEFT JOIN customers c 
+    ON t.account_id = c.account_id
